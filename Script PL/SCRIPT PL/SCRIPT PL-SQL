@@ -1,0 +1,21 @@
+DECLARE
+
+STMT VARCHAR2(1000);
+
+BEGIN
+
+ FOR X IN (
+           SELECT SID, SERIAL# FROM V$SESSION
+            WHERE STATUS = 'INACTIVE'
+            AND (last_call_et / 60) > 30
+          )
+ LOOP
+
+-- generate the script for killing in active sessions
+
+   STMT := 'ALTER SYSTEM KILL SESSION ''' ||X.SID ||',' ||X.SERIAL# ||'''' ;
+              DBMS_OUTPUT.PUT_LINE( STMT );
+   EXECUTE IMMEDIATE STMT;
+ END LOOP;
+
+END;
