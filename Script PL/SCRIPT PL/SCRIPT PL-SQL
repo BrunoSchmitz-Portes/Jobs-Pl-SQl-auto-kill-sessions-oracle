@@ -11,7 +11,7 @@ BEGIN
           )
  LOOP
 
--- generate the script for killing in active sessions
+-- Gerar o script para matar em sessões ativas
 
    STMT := 'ALTER SYSTEM KILL SESSION ''' ||X.SID ||',' ||X.SERIAL# ||'''' ;
               DBMS_OUTPUT.PUT_LINE( STMT );
